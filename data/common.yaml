@@ -1,0 +1,174 @@
+# Module-level defaults
+---
+# Data Merging Options
+# (Over-ride these defaults by using an environment-specific data file)
+lookup_options:
+  dokuwiki::local:
+    merge: hash
+  dokuwiki::source:
+    merge: hash
+
+dokuwiki::local: # Local Site Configuration
+  server: # Local server configuration
+    fqdn: "example.com" # NGINX responds to this url
+    client_max_body_size: "10m"
+  overwrite: # Installation option to setup or continually manage config files
+    user_accounts: true # Option to overwrite user accounts and passwords
+    local_conf: true # Option to overwrite local.php config file
+  conf: # Local Configuration File 'local.php'
+    title: "Dokuwiki Title"
+    tagline: "This is Dokuwiki"
+    license: "0"
+    showuseras: "username"
+    toptoclevel: "2"
+    tocminheads: "5"
+    maxtoclevel: "2"
+    sneaky_index: "1"
+    useacl: "1"
+    autopasswd: "0"
+    superuser: "@admin"
+    disableactions: "register"
+    remote: "1"
+    remoteuser: ""
+    relnofollow: "0"
+    indexdelay: "60*60*24*1"
+    registernotify: ""
+    mailfrom: ""
+    mailprefix: ""
+    sitemap: "1"
+    updatecheck: "0"
+    userewrite: "1"
+    useslash: "1"
+    canonical: "1"
+    fnencode: "utf-8"
+    gzip_output: "1"
+
+# Example User Account Data
+# dokuwiki::users:
+#   admin:
+#     real_name: "Administrator"
+#     passwordhash:
+#     email: "admin@example.com"
+#     groups:
+#       - admin
+
+dokuwiki::source:
+  repo: # Source of Dokuwiki Code
+    url: "git://github.com/splitbrain/dokuwiki.git"
+    revision: "release_stable_2020-07-29"
+    subdir: "htdocs"
+  packages: # Packages Required for Provisioning and Configuration
+    - "imagemagick" # For image resizing
+    - "git" # Used to clone dokuwiki and plugins
+  plugins:
+    amazon: # Amazon affiliate links
+      enabled: false
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-amazon.git"
+      revision: "2020-06-09"
+    bureaucracy:
+      enabled: true
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-bureaucracy.git"
+      revision: "2021-07-19"
+    badbehaviour:
+      enabled: true
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-badbehaviour.git"
+      revision: "2016-07-06"
+      conf:
+        email: "admin@example.com"
+    captcha:
+      enabled: false
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-captcha.git"
+      revision: "2021-11-10"
+    definitionlist:
+      enabled: true
+      ensure: present
+      url: "git://github.com/samwilson/dokuwiki-plugin-definitionlist.git"
+      revision: "2014-06-06"
+    dw2pdf:
+      enabled: false
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-dw2pdf.git"
+      revision: "2021-07-22"
+    gallery:
+      enabled: false
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-gallery.git"
+      revision: "2021-09-11"
+    include:
+      enabled: true
+      ensure: present
+      url: "git://github.com/dokufreaks/plugin-include.git"
+      revision: "2021-07-05"
+      conf:
+        showlink: "1"
+        showfooter: "0"
+        showdate: "0"
+        showuser: "0"
+        showcomments: "0"
+        showlinkbacks: "0"
+        showtags: "0"
+        linkonly: "1"
+        title: "1"
+    indexmenu:
+      enabled: false
+      ensure: absent
+      url: "git://github.com/samuelet/indexmenu.git"
+      revision: "main"
+      conf:
+        headpage: ":start:"
+        skip_file: "/(sidebar)/"
+    pagelist:
+      enabled: true
+      ensure: present
+      url: "git://github.com/dokufreaks/plugin-pagelist.git"
+      revision: "2020-09-27"
+    smtp:
+      enabled: true
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-smtp"
+      revision: "2020-11-21"
+      conf:
+        smtp_host: ""
+        smtp_port: ""
+        smtp_ssl: ""
+        auth_user: ""
+        auth_pass: ""
+    sync:
+      enabled: true
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-sync.git"
+      revision: "2017-03-08"
+    tag:
+      enabled: true
+      ensure: present
+      url: "git://github.com/dokufreaks/plugin-tag.git"
+      revision: "2020-12-02"
+    talkpage:
+      enabled: true
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-talkpage.git"
+      revision: "2018-11-18"
+    todo:
+      enabled: true
+      ensure: present
+      url: "git://github.com/leibler/dokuwiki-plugin-todo.git"
+      revision: "stable"
+    translation:
+      enabled: false
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-translation.git"
+      revision: "2021-08-23"
+    vshare: # embed videos from various video sharing sites
+      enabled: false
+      ensure: present
+      url: "git://github.com/splitbrain/dokuwiki-plugin-vshare.git"
+      revision: "2021-06-25"
+    wrap: #boxes
+      enabled: true
+      ensure: present
+      url: "git://github.com/selfthinker/dokuwiki_plugin_wrap.git"
+      revision: "v2018-04-22"

@@ -1,0 +1,11 @@
+# Installed by Puppet
+# Do Not Modify Directly
+User-agent: *
+Disallow: /doku.php?id=playground
+Disallow: /playground/
+Disallow: /doku.php?id=*:playground
+Disallow: /*/playground/
+Disallow: /doku.php?id=talk
+Disallow: /talk/
+Disallow: /doku.php?id=*:talk
+Disallow: /*/talk/
