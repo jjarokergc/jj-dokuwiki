@@ -16,8 +16,8 @@ mod 'puppet-php', '8.0.2'
 
 manifests/site.pp
 ```
-node 'webtrees.datacenter'{                 # webtrees.findfollow.com
-  include role::app::webtrees_server
+node 'dokuwiki.datacenter'{                 # webtrees.findfollow.com
+  include role::app::dokuwiki_server
 }
 ```
 
