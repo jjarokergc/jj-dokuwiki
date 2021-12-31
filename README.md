@@ -1,7 +1,14 @@
 # Puppet Module for Dokuwiki
 
+## Repositories
+The development repository is located at: https://gitlab.jaroker.org
+
+A mirror repository is pushed to: https://github.com/jjarokergc/puppet-webtrees
+
 ## Architecture
-This dokuwiki application is hosted by NGINX and is designed to be behind a reverse proxy.  The reverse proxy provides SSL offloading.
+This dokuwiki application is hosted with NGINX and is designed to be behind a reverse proxy.  The reverse proxy provides SSL offloading and a ModSecurity firewall.
+
+The puppet module uses hiera for data lookup, which specifies source location (and version) for downloading, database configuration, nginx configuration and php setup.
 
 ## Requirements
 Puppetfile.r10k
