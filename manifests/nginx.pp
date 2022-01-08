@@ -23,7 +23,7 @@ class dokuwiki::nginx {
     server_tokens         => 'off',
   }
   nginx::resource::server { $server_name:
-    server_name          => $server_fqdn_list,
+    server_name          => $server_fqdn_list + [$::fqdn],
     use_default_location => false,
     www_root             => $www_root,
     index_files          => [],
