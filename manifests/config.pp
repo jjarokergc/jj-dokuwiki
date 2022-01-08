@@ -9,7 +9,7 @@ class dokuwiki::config{
   $configuration= lookup('dokuwiki::local')
   $code_source  = lookup('dokuwiki::source')
 
-  $server_name = $nx[server][fqdn]                         # Example 'example.com'
+  $server_name = $nx[server][name]                         # Example 'example.com'
   $vhost_dir = "${provisioning[wwwroot]}/${server_name}"      # Virtual host directory, example '/var/www/example.com'
   $www_root = "${vhost_dir}/${code_source[repo][subdir]}"     # Location for dockuwiki, example '/var/www/example.com/htdocs'
   $user = $provisioning[user]                                 # User and Group Ownership
