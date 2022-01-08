@@ -8,13 +8,13 @@ class dokuwiki::users {
   $configuration= lookup('dokuwiki::local')         # Host-specific parameters
   $code_source  = lookup('dokuwiki::source')        # Host-specific parameters
 
-  $server_name = $nx[server][fqdn]                     # Example 'example.com'
-  $vhost_dir = "${provisioning[wwwroot]}/${server_name}"  # Virtual host directory, example '/var/www/example.com'
-  $www_root = "${vhost_dir}/${code_source[repo][subdir]}" # Location for dockuwiki, example '/var/www/example.com/htdocs'
+  $server_name = $nx['server']['name']                     # Example 'example.com'
+  $vhost_dir = "${provisioning['wwwroot']}/${server_name}"  # Virtual host directory, example '/var/www/example.com'
+  $www_root = "${vhost_dir}/${code_source['repo']['subdir']}" # Location for dockuwiki, example '/var/www/example.com/htdocs'
 
   # User and Group Ownership
-  $user = $provisioning[user]
-  $group = $provisioning[group]
+  $user = $provisioning['user']
+  $group = $provisioning['group']
 
 
   # User Accounts - Initial Account Creation
@@ -23,7 +23,7 @@ class dokuwiki::users {
     path    => "${www_root}/conf/users.auth.php",
     owner   => $user,
     group   => $group,
-    replace => $configuration[overwrite][user_accounts],
+    replace => $configuration['overwrite']['user_accounts'],
   }
   concat::fragment { 'dokuwiki_user_header':
     target  => 'dokuwiki-users.auth.php',

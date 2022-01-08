@@ -10,9 +10,9 @@ class dokuwiki::nginx {
   $configuration= lookup('dokuwiki::local')         # Host-specific parameters
   $code_source  = lookup('dokuwiki::source')        # Host-specific parameters
 
-  $server_name = $nx['server']['fqdn']                     # Example 'example.com'
-  $server_id = $nx['server']['name']
-  $vhost_dir = "${provisioning[wwwroot]}/${server_name}"  # Virtual host directory, example '/var/www/example.com'
+  $server_fqdn_list = $nx['server']['fqdn']                     # Example 'example.com'
+  $server_name = $nx['server']['name']
+  $vhost_dir = "${provisioning['wwwroot']}/${server_name}"  # Virtual host directory, example '/var/www/example.com'
   $www_root = "${vhost_dir}/${code_source[repo][subdir]}" # Location for dockuwiki, example '/var/www/example.com/htdocs'
   $plugins_dir = "${www_root}/lib/plugins"                # Location for additional plugins,'var/www/example.com/htdocs/lib/plugins'
   $socket = $provisioning['php-fpm']['sock']        # PHP-fpm Config
@@ -22,8 +22,8 @@ class dokuwiki::nginx {
     # Security precaution: don't show nginx version number
     server_tokens         => 'off',
   }
-  nginx::resource::server { $server_id:
-    server_name          => $server_name + [$::fqdn],
+  nginx::resource::server { $server_name:
+    server_name          => $server_fqdn_list,
     use_default_location => false,
     www_root             => $www_root,
     index_files          => [],
@@ -31,22 +31,22 @@ class dokuwiki::nginx {
     require              => Vcsrepo[$www_root],
   }
   nginx::resource::location { '/':
-    server      => $server_id,
+    server      => $server_name,
     index_files => ['doku.php'],
     try_files   => ['$uri', '$uri/', '@dokuwiki'],
   }
   nginx::resource::location { '~ ^/lib.*\.(gif|png|ico|jpg)$':
-    server      => $server_id,
+    server      => $server_name,
     expires     => '30d',
     index_files => [],
   }
   nginx::resource::location { '~ /(data|conf|bin|inc)/':
-    server        => $server_id,
+    server        => $server_name,
     index_files   => [],
     location_deny => ['all'],
   }
   nginx::resource::location { '@dokuwiki':
-    server        => $server_id,
+    server        => $server_name,
     index_files   => [],
     rewrite_rules => [
       '^/_media/(.*)  /lib/exe/fetch.php?media=$1 last',
@@ -56,7 +56,7 @@ class dokuwiki::nginx {
     ],
   }
   nginx::resource::location { '~ \.php':
-      server        => $server_id,
+      server        => $server_name,
       index_files   => [],
       include       => ['fastcgi_params'],
       fastcgi_param => {'SCRIPT_FILENAME' => '$document_root$fastcgi_script_name'},

@@ -8,9 +8,9 @@ class dokuwiki::plugins{
   $configuration= lookup('dokuwiki::local')         # Host-specific parameters
   $code_source  = lookup('dokuwiki::source')        # Host-specific parameters
 
-  $server_name = $nx[server][fqdn]                     # Example 'example.com'
-  $vhost_dir = "${provisioning[wwwroot]}/${server_name}"  # Virtual host directory, example '/var/www/example.com'
-  $www_root = "${vhost_dir}/${code_source[repo][subdir]}" # Location for dockuwiki, example '/var/www/example.com/htdocs'
+  $server_name = $nx['server']['name']                     # Example 'example.com'
+  $vhost_dir = "${provisioning['wwwroot']}/${server_name}"  # Virtual host directory, example '/var/www/example.com'
+  $www_root = "${vhost_dir}/${code_source['repo']['subdir']}" # Location for dockuwiki, example '/var/www/example.com/htdocs'
 
   # Plugin Installation
   $plugins = $code_source[plugins]          # Hash of plugins to install
