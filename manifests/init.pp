@@ -62,14 +62,15 @@ class dokuwiki {
   }
   # Dokuwiki Installation
   vcsrepo { $www_root :
-    ensure            => 'present',
-    provider          => 'git',
-    trust_server_cert => true,
-    source            => $code_source[repo][url],
-    revision          => $code_source[repo][revision],
-    depth             => 1,
-    user              => $provisioning[user],
-    require           => File[$vhost_dir],
+    ensure             => 'present',
+    provider           => 'git',
+    trust_server_cert  => true,
+    source             => $code_source[repo][url],
+    revision           => $code_source[repo][revision],
+    depth              => 1,
+    user               => $provisioning[user],
+    require            => File[$vhost_dir],
+    keep_local_changes => true,
   }
   # Robots.txt file
   file{"${www_root}/robots.txt":
