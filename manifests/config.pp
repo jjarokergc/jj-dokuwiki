@@ -8,6 +8,7 @@ class dokuwiki::config{
   $nx           = lookup('nginx::reverse_proxy')    # Reverse proxy
   $configuration= lookup('dokuwiki::local')
   $code_source  = lookup('dokuwiki::source')
+  $mime_types   = lookup('dokuwiki::mime')          # conf/mime.local.conf file
 
   $server_name = $nx['server']['name']                         # Example 'example.com'
   $vhost_dir = "${provisioning['wwwroot']}/${server_name}"      # Virtual host directory, example '/var/www/example.com'
@@ -42,4 +43,32 @@ $conf['<%= $n %>'] = '<%= $v %>';
       order   => '10',
     }
   }
+
+  # Mime Configuration File Setup
+  # Local Configuration File Setup
+  concat {'mime.local.conf':
+    ensure  => present,
+    path    => "${www_root}/conf/mime.local.conf",
+    mode    => '0644',
+    owner   => $user,
+    group   => $group,
+    replace => true,
+  }
+  concat::fragment {'mime.local.conf Header':
+    target  => 'mime.local.conf',
+    content => '# File Managed by Puppet',
+    order   => '01',
+  }
+  # Add configuration values defined in dokuwiki::local[conf] 
+  $mime_template = @(END)
+<%= $n %>  <%= $v %>
+  END
+  $mime_types.each | String $n, String $v | { # Key=>Value pairs for local configuration
+    concat::fragment {"mime type - ${n}":
+      target  => 'mime.local.conf',
+      content => inline_epp($mime_template),
+      order   => '10',
+    }
+  }
+
 }

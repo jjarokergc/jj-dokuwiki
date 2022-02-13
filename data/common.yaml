@@ -8,6 +8,8 @@ lookup_options:
   dokuwiki::source:
     merge: hash
 
+dokuwiki::mime: # File extensions for meme.local.conf
+  chm: '!text/html'  # Allow download-only of html files
 dokuwiki::local: # Local Site Configuration
   server: # Local server configuration
     fqdn: "example.com" # NGINX responds to this url
