@@ -3,6 +3,8 @@
 # Data Merging Options
 # (Over-ride these defaults by using an environment-specific data file)
 lookup_options:
+  dokuwiki::mime:
+    merge: hash
   dokuwiki::local:
     merge: hash
   dokuwiki::source:
