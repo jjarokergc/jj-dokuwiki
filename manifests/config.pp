@@ -5,15 +5,15 @@ class dokuwiki::config{
 
   # VARIABLES
   $provisioning = lookup('dokuwiki::provisioning')
-  $nx           = lookup('nginx::reverse_proxy')    # Reverse proxy
+  $nx           = lookup('nginx::reverse_proxy')              # Reverse proxy
   $configuration= lookup('dokuwiki::local')
   $code_source  = lookup('dokuwiki::source')
-  $mime_types   = lookup('dokuwiki::mime')          # conf/mime.local.conf file
+  $mime_types   = lookup('dokuwiki::mime')                    # conf/mime.local.conf file
 
-  $server_name = $nx['server']['name']                         # Example 'example.com'
-  $vhost_dir = "${provisioning['wwwroot']}/${server_name}"      # Virtual host directory, example '/var/www/example.com'
-  $www_root = "${vhost_dir}/${code_source['repo']['subdir']}"     # Location for dockuwiki, example '/var/www/example.com/htdocs'
-  $user = $provisioning['user']                                 # User and Group Ownership
+  $server_name = $nx['server']['name']                        # Example 'example.com'
+  $vhost_dir = "${provisioning['wwwroot']}/${server_name}"    # Virtual host directory, example '/var/www/example.com'
+  $www_root = "${vhost_dir}/${code_source['repo']['subdir']}" # Location for dockuwiki, example '/var/www/example.com/htdocs'
+  $user = $provisioning['user']                               # User and Group Ownership
   $group = $provisioning['group']
 
   # Local Configuration File Setup
@@ -48,7 +48,7 @@ $conf['<%= $n %>'] = '<%= $v %>';
   # Local Configuration File Setup
   concat {'mime.local.conf':
     ensure  => present,
-    path    => "${www_root}/conf/mime.local.conf",
+    path    => "${vhost_dir}/conf/mime.local.conf",
     mode    => '0644',
     owner   => $user,
     group   => $group,
@@ -56,7 +56,7 @@ $conf['<%= $n %>'] = '<%= $v %>';
   }
   concat::fragment {'mime.local.conf Header':
     target  => 'mime.local.conf',
-    content => '# File Managed by Puppet',
+    content => "# File Managed by Puppet\n\n",
     order   => '01',
   }
   # Add configuration values defined in dokuwiki::local[conf] 
