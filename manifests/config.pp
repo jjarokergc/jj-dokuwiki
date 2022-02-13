@@ -48,7 +48,7 @@ $conf['<%= $n %>'] = '<%= $v %>';
   # Local Configuration File Setup
   concat {'mime.local.conf':
     ensure  => present,
-    path    => "${vhost_dir}/conf/mime.local.conf",
+    path    => "${www_root}/conf/mime.local.conf",
     mode    => '0644',
     owner   => $user,
     group   => $group,
