@@ -97,6 +97,11 @@ dokuwiki::source:
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-dw2pdf.git"
       revision: "2021-07-22"
+    edittable:
+      enabled: true
+      ensure: present
+      url: "https://github.com/cosmocode/edittable.git"
+      revision: "2022-01-22"
     gallery:
       enabled: false
       ensure: present
