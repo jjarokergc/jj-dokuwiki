@@ -58,8 +58,8 @@ dokuwiki::local: # Local Site Configuration
 
 dokuwiki::source:
   repo: # Source of Dokuwiki Code
-    url: "https://github.com/splitbrain/dokuwiki.git"
-    revision: "release_stable_2020-07-29"
+    url: "https://github.com/dokuwiki/dokuwiki.git"
+    revision: "release-2022-07-31"
     subdir: "htdocs"
   packages: # Packages Required for Provisioning and Configuration
     - "imagemagick" # For image resizing
