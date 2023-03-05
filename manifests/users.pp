@@ -50,6 +50,7 @@ class dokuwiki::users {
 
 
 
+#TODO - create conf/acl.auth.php file
 
   # if $dokuwiki::useacl == 1 {
   #   dokuwiki::user {'adminuser':
