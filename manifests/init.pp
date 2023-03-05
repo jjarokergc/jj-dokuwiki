@@ -71,7 +71,6 @@ class dokuwiki {
     user               => $provisioning[user],
     require            => File[$vhost_dir],
     keep_local_changes => true,
-    safe_directory     => true, # Response to CVE-2022-24765
   }
   # Robots.txt file
   file{"${www_root}/robots.txt":
