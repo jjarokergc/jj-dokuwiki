@@ -8,7 +8,7 @@ A mirror repository is pushed to: <https://github.com/jjarokergc/puppet-webtrees
 
 ## Architecture
 
-This dokuwiki application is hosted with NGINX and is designed to be behind a reverse proxy.  The reverse proxy provides SSL offloading and a ModSecurity firewall.
+This dokuwiki application is hosted with NGINX and is designed to be behind a reverse proxy that provides SSL offloading.
 
 The puppet module uses hiera for data lookup, which specifies source location (and version) for downloading, nginx configuration and php setup.
 
@@ -75,4 +75,3 @@ class profile::dokuwiki{
 ## Author
 
 Jon Jaroker
-devops@jaroker.com
