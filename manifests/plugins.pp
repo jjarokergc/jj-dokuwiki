@@ -24,18 +24,18 @@ class dokuwiki::plugins {
           ensure            => present,
           provider          => 'git',
           trust_server_cert => true,
-          source            => $plugin[url],
-          revision          => $plugin[revision],
+          source            => $plugin['url'],
+          revision          => $plugin['revision'],
           depth             => 1,
-          user              => $provisioning[user],
+          user              => $provisioning['user'],
           require           => Vcsrepo[$www_root],
         } # end of Install Plugin
         # Add optional configuration parameters for plugin
-        if has_key($plugin,'conf') { # Config parameters are included for plugin
+        if ('conf' in $plugin) { # Config parameters are included for plugin
           $conf_template = @(END)
 $conf['plugin']['<%= $n %>']['<%= $k %>'] = '<%= $v %>';
           END
-          $local_config = $plugin[conf]
+          $local_config = $plugin['conf']
           $local_config.each | String $k, String $v | { # Key 'k' => Value 'v' pairs for local configuration
             concat::fragment { "conf['plugin'][${n}][${k}]":
               target  => 'dokuwiki-local.php',
