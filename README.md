@@ -17,11 +17,11 @@ The puppet module uses hiera for data lookup, which specifies source location (a
 Puppetfile.r10k
 
 ```
-mod 'puppetlabs-concat', '7.1.1'
-mod 'puppetlabs-stdlib', '8.1.0'
-mod 'puppetlabs-vcsrepo', '5.0.0'
-mod 'puppet-nginx', '3.3.0'
-mod 'puppet-php', '8.0.2'
+mod 'puppetlabs-concat', '9.0.0' 
+mod 'puppetlabs-stdlib', '9.3.0'
+mod 'puppetlabs-vcsrepo', '6.1.0' 
+mod 'puppet-nginx', '5.0.0'
+mod 'puppet-php', '10.0.0'
 ```
 
 ## Usage Example
@@ -29,7 +29,7 @@ mod 'puppet-php', '8.0.2'
 manifests/site.pp
 
 ```
-node 'dokuwiki.datacenter'{                 # webtrees.findfollow.com
+node 'dokuwiki.localdomain'{                
   include role::app::dokuwiki_server
 }
 ```

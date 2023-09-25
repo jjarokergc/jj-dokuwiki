@@ -4,17 +4,26 @@
 # (Over-ride these defaults by using an environment-specific data file)
 lookup_options:
   dokuwiki::mime:
-    merge: hash
+    merge:
+      strategy: deep
+      merge_hash_arrays: true
   dokuwiki::local:
-    merge: hash
+    merge:
+      strategy: deep
+      merge_hash_arrays: true
   dokuwiki::source:
-    merge: hash
+    merge:
+      strategy: deep
+      merge_hash_arrays: true
 
 dokuwiki::mime: # File extensions for meme.local.conf
   chm: '!text/html'  # Allow download-only of html files
+
+# Local Site Configuration
 dokuwiki::local: # Local Site Configuration
   server: # Local server configuration
-    fqdn: "example.com" # NGINX responds to this url
+    fqdn: "example.com" # Main fqdn for this server - Used in config
+    urls: ['example.com' 'www.example.com', "%{networking.fqdn}"]  # List of all listen urls for Nginx
     client_max_body_size: "10m"
   overwrite: # Installation option to setup or continually manage config files
     user_accounts: true # Option to overwrite user accounts and passwords
@@ -59,7 +68,7 @@ dokuwiki::local: # Local Site Configuration
 dokuwiki::source:
   repo: # Source of Dokuwiki Code
     url: "https://github.com/dokuwiki/dokuwiki.git"
-    revision: "release-2022-07-31"
+    revision: "release-2023-04-04"
     subdir: "htdocs"
   packages: # Packages Required for Provisioning and Configuration
     - "imagemagick" # For image resizing
@@ -74,7 +83,7 @@ dokuwiki::source:
       enabled: true
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-bureaucracy.git"
-      revision: "2021-07-19"
+      revision: "2023-05-16"
     badbehaviour:
       enabled: true
       ensure: present
@@ -86,7 +95,7 @@ dokuwiki::source:
       enabled: false
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-captcha.git"
-      revision: "2021-11-10"
+      revision: "2022-08-27"
     definitionlist:
       enabled: true
       ensure: present
@@ -96,22 +105,29 @@ dokuwiki::source:
       enabled: false
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-dw2pdf.git"
-      revision: "2021-07-22"
+      revision: "2023-09-15"
     edittable:
       enabled: true
       ensure: present
       url: "https://github.com/cosmocode/edittable.git"
-      revision: "2022-01-22"
+      revision: "2023-01-14"
     gallery:
       enabled: false
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-gallery.git"
-      revision: "2021-09-11"
+      revision: "2023-09-18"
+    imgpaste:
+      enabled: true
+      ensure: present
+      url: "https://github.com/cosmocode/dokuwiki-plugin-imgpaste.git"
+      revision: "2023-02-08"
+      conf:
+        filename: "@NS@:@PAGE@:%Y%m%d-%H%M%S"
     include:
       enabled: true
       ensure: present
       url: "https://github.com/dokufreaks/plugin-include.git"
-      revision: "2021-07-05"
+      revision: "2023-09-22"
       conf:
         showlink: "1"
         showfooter: "0"
@@ -126,7 +142,7 @@ dokuwiki::source:
       enabled: false
       ensure: absent
       url: "https://github.com/samuelet/indexmenu.git"
-      revision: "main"
+      revision: "v2023-09-17"
       conf:
         headpage: ":start:"
         skip_file: "/(sidebar)/"
@@ -134,12 +150,12 @@ dokuwiki::source:
       enabled: true
       ensure: present
       url: "https://github.com/dokufreaks/plugin-pagelist.git"
-      revision: "2020-09-27"
+      revision: "2023-08-27"
     smtp:
       enabled: true
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-smtp"
-      revision: "2020-11-21"
+      revision: "2023-04-03"
       conf:
         smtp_host: ""
         smtp_port: ""
@@ -150,12 +166,12 @@ dokuwiki::source:
       enabled: true
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-sync.git"
-      revision: "2017-03-08"
+      revision: "2022-09-06"
     tag:
       enabled: true
       ensure: present
       url: "https://github.com/dokufreaks/plugin-tag.git"
-      revision: "2020-12-02"
+      revision: "2023-09-10"
     talkpage:
       enabled: true
       ensure: present
@@ -165,19 +181,19 @@ dokuwiki::source:
       enabled: true
       ensure: present
       url: "https://github.com/leibler/dokuwiki-plugin-todo.git"
-      revision: "stable"
+      revision: "2023-07-14"
     translation:
       enabled: false
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-translation.git"
-      revision: "2021-08-23"
+      revision: "2023-09-13"
     vshare: # embed videos from various video sharing sites
       enabled: false
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-vshare.git"
-      revision: "2021-06-25"
+      revision: "2022-02-03"
     wrap: #boxes
       enabled: true
       ensure: present
       url: "https://github.com/selfthinker/dokuwiki_plugin_wrap.git"
-      revision: "v2018-04-22"
+      revision: "v2023-08-13"
