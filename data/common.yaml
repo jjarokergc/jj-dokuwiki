@@ -23,7 +23,7 @@ dokuwiki::mime: # File extensions for meme.local.conf
 dokuwiki::local: # Local Site Configuration
   server: # Local server configuration
     fqdn: "example.com" # Main fqdn for this server - Used in config
-    urls: ['example.com', 'www.example.com', "%{networking.fqdn}"]  # List of all listen urls for Nginx
+    urls: ["%{networking.fqdn}"]  # List of all listen urls for Nginx. Node's own fqdn included by default.
     client_max_body_size: "10m"
   overwrite: # Installation option to setup or continually manage config files
     user_accounts: true # Option to overwrite user accounts and passwords
