@@ -48,9 +48,13 @@ class dokuwiki::plugins {
         # TODO If 'packages' in plugin ... install required packages such as php7-gd for dw2pdf
         if ('packages' in $plugin) {
           # Install additional packages that are required for this plugin
-          package { $plugin['packages']: ensure => present, }
-        }
-        #
+          $plugin['packages'].each | Integer $package_i, String $package_name | {
+            if ! defined(Package[$package_name]) {
+              # Install new package
+              package { $package_name: ensure => present, }
+            }
+          } # For each of the packages
+        } # If packages are specified in plugin
       } else { file { "${plugins_dir}/${n}": ensure => absent, force => true } }  # Plugin is managed by puppet and should be purged
     } # If enabled, Plugin is managed by puppet
   } # Iterate over each plugin
