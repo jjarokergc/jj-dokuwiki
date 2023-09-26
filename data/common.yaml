@@ -164,8 +164,8 @@ dokuwiki::source:
         smtp_ssl: ""
         auth_user: ""
         auth_pass: ""
-    sync:
-      enabled: true
+    sync: # Sync with another wiki that has XML-RPC installed
+      enabled: false
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-sync.git"
       revision: "2022-09-06"
