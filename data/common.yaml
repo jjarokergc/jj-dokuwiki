@@ -101,11 +101,13 @@ dokuwiki::source:
       ensure: present
       url: "https://github.com/samwilson/dokuwiki-plugin-definitionlist.git"
       revision: "2014-06-06"
-    dw2pdf:
+    dw2pdf: # Export Dokuwiki to PDF https://www.dokuwiki.org/plugin:dw2pdf
       enabled: false
       ensure: present
       url: "https://github.com/splitbrain/dokuwiki-plugin-dw2pdf.git"
       revision: "2023-09-15"
+      packages:
+        - 'php-gd' #To export png images with alpha channel
     edittable:
       enabled: true
       ensure: present

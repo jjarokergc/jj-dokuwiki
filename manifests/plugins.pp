@@ -33,7 +33,7 @@ class dokuwiki::plugins {
         # Add optional configuration parameters for plugin
         if ('conf' in $plugin) { # Config parameters are included for plugin
           $conf_template = @(END)
-$conf['plugin']['<%= $n %>']['<%= $k %>'] = '<%= $v %>';
+            $conf['plugin']['<%= $n %>']['<%= $k %>'] = '<%= $v %>';
           END
           $local_config = $plugin['conf']
           $local_config.each | String $k, String $v | { # Key 'k' => Value 'v' pairs for local configuration
@@ -44,6 +44,13 @@ $conf['plugin']['<%= $n %>']['<%= $k %>'] = '<%= $v %>';
             } # Add key to local configuration file using file-fragment
           } # Iterate over each configuration key
         } # If plugin has configuration parameters
+        #
+        # TODO If 'packages' in plugin ... install required packages such as php7-gd for dw2pdf
+        if ('packages' in $plugin) {
+          # Install additional packages that are required for this plugin
+          package { $plugin['packages']: ensure => present, }
+        }
+        #
       } else { file { "${plugins_dir}/${n}": ensure => absent, force => true } }  # Plugin is managed by puppet and should be purged
     } # If enabled, Plugin is managed by puppet
   } # Iterate over each plugin
