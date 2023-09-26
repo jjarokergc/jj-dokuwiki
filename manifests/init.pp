@@ -12,7 +12,7 @@ class dokuwiki {
   $socket = $provisioning['php-fpm']['sock']                  # PHP-fpm Config
 
   # Install Required Packages for Dokuwiki
-  package { $code_source['packages']: ensure => present }
+  package { $code_source['packages']: ensure => present, }
 
   # Install PHP and PHP-XML for NGINX
   file { $socket:
@@ -20,14 +20,14 @@ class dokuwiki {
     group => $provisioning[group],
   }
   class { 'php':
-    ensure     => latest,
+    ensure       => latest,
     manage_repos => true,
-    fpm        => true,
-    dev        => false,
-    composer   => false,
-    pear       => true,
-    phpunit    => false,
-    fpm_pools  => {
+    fpm          => true,
+    dev          => false,
+    composer     => false,
+    pear         => true,
+    phpunit      => false,
+    fpm_pools    => {
       'www' => {
         'catch_workers_output'      => 'no',
         'listen'                    => $socket,
@@ -43,19 +43,19 @@ class dokuwiki {
         'request_terminate_timeout' => 0,
       },
     },
-    extensions => {
+    extensions   => {
       'xml' => {},
     },
   }
 
   # Virtual Host Directory
   file { [
-      $provisioning[wwwroot],
+      $provisioning['wwwroot'],
       $vhost_dir,
     ]:
       ensure => directory,
-      owner  => $provisioning[user],
-      group  => $provisioning[group],
+      owner  => $provisioning['user'],
+      group  => $provisioning['group'],
       mode   => '0755',
   }
   # Dokuwiki Installation
@@ -63,10 +63,10 @@ class dokuwiki {
     ensure             => 'present',
     provider           => 'git',
     trust_server_cert  => true,
-    source             => $code_source[repo][url],
-    revision           => $code_source[repo][revision],
+    source             => $code_source['repo']['url'],
+    revision           => $code_source['repo']['revision'],
     depth              => 1,
-    user               => $provisioning[user],
+    user               => $provisioning['user'],
     require            => File[$vhost_dir],
     keep_local_changes => true,
   }

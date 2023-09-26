@@ -16,7 +16,7 @@ The puppet module uses hiera for data lookup, which specifies source location (a
 
 Puppetfile.r10k
 
-```
+```puppet
 mod 'puppetlabs-concat', '9.0.0' 
 mod 'puppetlabs-stdlib', '9.3.0'
 mod 'puppetlabs-vcsrepo', '6.1.0' 
@@ -28,7 +28,7 @@ mod 'puppet-php', '10.0.0'
 
 manifests/site.pp
 
-```
+```puppet
 node 'dokuwiki.localdomain'{                
   include role::app::dokuwiki_server
 }
@@ -36,7 +36,7 @@ node 'dokuwiki.localdomain'{
 
 site/role/app/dokuwiki_server.pp
 
-```
+```puppet
 #
 # Install Dokuwiki website
 # Configure reverse proxy with SSL
@@ -56,7 +56,7 @@ class role::app::dokuwiki_server {
 
 site/profile/dokuwiki.pp
 
-```
+```puppet
 # Install Dokuwiki and Plugins
 # Install NGINX server with PHP
 # Configure users and settings
