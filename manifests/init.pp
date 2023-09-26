@@ -2,14 +2,14 @@
 #
 class dokuwiki {
   # VARIABLES
-  $provisioning = lookup('dokuwiki::provisioning')  # OS-specific parameters
-  $configuration= lookup('dokuwiki::local')         # Host-specific parameters
-  $code_source  = lookup('dokuwiki::source')        # Host-specific parameters
+  $provisioning = lookup('dokuwiki::provisioning')  # OS-specific parameters. See data/Debian-family.yaml
+  $configuration= lookup('dokuwiki::local')         # Host-specific parameters. See data/common.yaml
+  $code_source  = lookup('dokuwiki::source')        # Host-specific parameters. See data/common.yaml
 
   $server_name = $configuration['server']['fqdn']             # Example 'example.com'
   $vhost_dir = "${provisioning['wwwroot']}/${server_name}"    # Virtual host directory, example '/var/www/example.com'
   $www_root = "${vhost_dir}/${code_source['repo']['subdir']}" # Location for dockuwiki, example '/var/www/example.com/htdocs'
-  $socket = $provisioning['php-fpm']['sock']        # PHP-fpm Config
+  $socket = $provisioning['php-fpm']['sock']                  # PHP-fpm Config
 
   # Install Required Packages for Dokuwiki
   package { $code_source['packages']: ensure => present }
@@ -20,7 +20,8 @@ class dokuwiki {
     group => $provisioning[group],
   }
   class { 'php':
-    ensure     => present,
+    ensure     => latest,
+    manage_repos => true,
     fpm        => true,
     dev        => false,
     composer   => false,
