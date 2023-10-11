@@ -8,6 +8,7 @@ class dokuwiki::nginx {
   $configuration= lookup('dokuwiki::local')         # Host-specific parameters
   $code_source  = lookup('dokuwiki::source')        # Host-specific parameters
 
+  $server_params = $configuration['server_params']          # Hash of paramters used by nginx server class
   $server_urls = $configuration['server']['urls']           # Example ['example.com', 'www.example.com']
   $server_name = $configuration['server']['fqdn']           # Example 'example.com'
   $vhost_dir = "${provisioning['wwwroot']}/${server_name}"  # Virtual host directory, example '/var/www/example.com'
@@ -22,12 +23,10 @@ class dokuwiki::nginx {
 
   # Create virtual server
   nginx::resource::server { $server_name:
-    server_name          => $server_urls, # List of urls for server
-    use_default_location => false,
-    www_root             => $www_root,
-    index_files          => [],
-    client_max_body_size => $configuration['server']['client_max_body_size'],
-    require              => Vcsrepo[$www_root],
+    server_name => $server_urls, # List of urls for server
+    www_root    => $www_root,
+    require     => Vcsrepo[$www_root],
+    *           => $server_params,
   }
   nginx::resource::location { '/':
     server      => $server_name,

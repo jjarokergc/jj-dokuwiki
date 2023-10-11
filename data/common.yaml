@@ -23,8 +23,15 @@ dokuwiki::mime: # File extensions for meme.local.conf
 dokuwiki::local: # Local Site Configuration
   server: # Local server configuration
     fqdn: "example.com" # Main fqdn for this server - Used in config
-    urls: ["%{networking.fqdn}"]  # List of all listen urls for Nginx. Node's own fqdn included by default.
-    client_max_body_size: "10m"
+    urls:  # List of all listen urls for Nginx. Node's own fqdn included by default.
+      - "%{networking.fqdn}"
+  server_params: # This hash is passed to nginx::resource::server
+    index_files: []
+    use_default_location: false
+    client_max_body_size: "10m"         # Max size of upload
+    server_cfg_prepend: # nginx module doesn't have real_ip, so use this workaround
+      real_ip_header: 'X-Forwarded-For' # Set real ip on this nginx app server from what was received from proxy
+      set_real_ip_from: '10.10.0.0/16'  # Only trust if this information comes from the actual proxy server; otherwise, easy to spoof
   overwrite: # Installation option to setup or continually manage config files
     user_accounts: true # Option to overwrite user accounts and passwords
     local_conf: true # Option to overwrite local.php config file
